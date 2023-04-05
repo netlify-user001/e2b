@@ -51,11 +51,7 @@ class OutStderrResponse(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
-        return _dict
+        return self.dict(by_alias=True, exclude={}, exclude_none=True)
 
     @classmethod
     def from_dict(cls, obj: dict) -> OutStderrResponse:
@@ -67,14 +63,17 @@ class OutStderrResponse(BaseModel):
             return OutStderrResponse.parse_obj(obj)
 
         # raise errors for additional fields in the input
-        for _key in obj.keys():
+        for _key in obj:
             if _key not in cls.__properties:
-                raise ValueError("Error due to additional fields (not defined in OutStderrResponse) in the input: " + obj)
+                raise ValueError(
+                    f"Error due to additional fields (not defined in OutStderrResponse) in the input: {obj}"
+                )
 
-        _obj = OutStderrResponse.parse_obj({
-            "type": obj.get("type"),
-            "timestamp": obj.get("timestamp"),
-            "line": obj.get("line")
-        })
-        return _obj
+        return OutStderrResponse.parse_obj(
+            {
+                "type": obj.get("type"),
+                "timestamp": obj.get("timestamp"),
+                "line": obj.get("line"),
+            }
+        )
 

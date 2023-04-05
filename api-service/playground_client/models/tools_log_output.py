@@ -48,11 +48,7 @@ class ToolsLogOutput(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
-        return _dict
+        return self.dict(by_alias=True, exclude={}, exclude_none=True)
 
     @classmethod
     def from_dict(cls, obj: dict) -> ToolsLogOutput:
@@ -64,12 +60,11 @@ class ToolsLogOutput(BaseModel):
             return ToolsLogOutput.parse_obj(obj)
 
         # raise errors for additional fields in the input
-        for _key in obj.keys():
+        for _key in obj:
             if _key not in cls.__properties:
-                raise ValueError("Error due to additional fields (not defined in ToolsLogOutput) in the input: " + obj)
+                raise ValueError(
+                    f"Error due to additional fields (not defined in ToolsLogOutput) in the input: {obj}"
+                )
 
-        _obj = ToolsLogOutput.parse_obj({
-            "response": obj.get("response")
-        })
-        return _obj
+        return ToolsLogOutput.parse_obj({"response": obj.get("response")})
 

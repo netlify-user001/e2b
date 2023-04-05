@@ -56,9 +56,7 @@ class ListFilesystemDirResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in entries (list)
         _items = []
         if self.entries:
-            for _item in self.entries:
-                if _item:
-                    _items.append(_item.to_dict())
+            _items.extend(_item.to_dict() for _item in self.entries if _item)
             _dict['entries'] = _items
         return _dict
 
@@ -72,12 +70,19 @@ class ListFilesystemDirResponse(BaseModel):
             return ListFilesystemDirResponse.parse_obj(obj)
 
         # raise errors for additional fields in the input
-        for _key in obj.keys():
+        for _key in obj:
             if _key not in cls.__properties:
-                raise ValueError("Error due to additional fields (not defined in ListFilesystemDirResponse) in the input: " + obj)
+                raise ValueError(
+                    f"Error due to additional fields (not defined in ListFilesystemDirResponse) in the input: {obj}"
+                )
 
-        _obj = ListFilesystemDirResponse.parse_obj({
-            "entries": [EntryInfo.from_dict(_item) for _item in obj.get("entries")] if obj.get("entries") is not None else None
-        })
-        return _obj
+        return ListFilesystemDirResponse.parse_obj(
+            {
+                "entries": [
+                    EntryInfo.from_dict(_item) for _item in obj.get("entries")
+                ]
+                if obj.get("entries") is not None
+                else None
+            }
+        )
 

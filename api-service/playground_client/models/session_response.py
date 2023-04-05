@@ -57,9 +57,7 @@ class SessionResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in ports (list)
         _items = []
         if self.ports:
-            for _item in self.ports:
-                if _item:
-                    _items.append(_item.to_dict())
+            _items.extend(_item.to_dict() for _item in self.ports if _item)
             _dict['ports'] = _items
         return _dict
 
@@ -73,13 +71,18 @@ class SessionResponse(BaseModel):
             return SessionResponse.parse_obj(obj)
 
         # raise errors for additional fields in the input
-        for _key in obj.keys():
+        for _key in obj:
             if _key not in cls.__properties:
-                raise ValueError("Error due to additional fields (not defined in SessionResponse) in the input: " + obj)
+                raise ValueError(
+                    f"Error due to additional fields (not defined in SessionResponse) in the input: {obj}"
+                )
 
-        _obj = SessionResponse.parse_obj({
-            "id": obj.get("id"),
-            "ports": [OpenPort.from_dict(_item) for _item in obj.get("ports")] if obj.get("ports") is not None else None
-        })
-        return _obj
+        return SessionResponse.parse_obj(
+            {
+                "id": obj.get("id"),
+                "ports": [OpenPort.from_dict(_item) for _item in obj.get("ports")]
+                if obj.get("ports") is not None
+                else None,
+            }
+        )
 

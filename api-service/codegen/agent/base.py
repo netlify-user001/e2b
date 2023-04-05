@@ -51,29 +51,26 @@ class CodegenAgentExecutor(AgentExecutor):
         color_mapping: Dict[str, str],
         name_to_tool_map: Dict[str, BaseTool],
     ) -> str:
-        # Otherwise we lookup the tool
-        if tool_name in name_to_tool_map:
-            tool = name_to_tool_map[tool_name]
-            return_direct = tool.return_direct
-            color = color_mapping[tool_name]
-            llm_prefix = "" if return_direct else self.agent.llm_prefix
-            # We then call the tool on the tool input to get an observation
-            observation = await tool.arun(
-                tool_input,
-                verbose=self.verbose,
-                color=color,
-                llm_prefix=llm_prefix,
-                observation_prefix=self.agent.observation_prefix,
-            )
-        else:
-            observation = await InvalidTool().arun(  # type: ignore
+        if tool_name not in name_to_tool_map:
+            return await InvalidTool().arun(  # type: ignore
                 tool_name,
                 verbose=self.verbose,
                 color=None,
                 llm_prefix="",
                 observation_prefix=self.agent.observation_prefix,
             )
-        return observation
+        tool = name_to_tool_map[tool_name]
+        return_direct = tool.return_direct
+        color = color_mapping[tool_name]
+        llm_prefix = "" if return_direct else self.agent.llm_prefix
+            # We then call the tool on the tool input to get an observation
+        return await tool.arun(
+            tool_input,
+            verbose=self.verbose,
+            color=color,
+            llm_prefix=llm_prefix,
+            observation_prefix=self.agent.observation_prefix,
+        )
 
     async def _atake_next_step(
         self,
@@ -91,13 +88,7 @@ class CodegenAgentExecutor(AgentExecutor):
         # If the tool chosen is the finishing tool, then we end and return.
         if isinstance(output, AgentFinish):
             return output
-        # Sometimes the LLM decides to pass the value of `FINAL_ANSWER_ACTION` as a tool name.
-        # Instead of trying to "force" the LLM to don't do that, we can just write a bit of
-        # code and handle this case.
-        elif (
-            output.tool == FINAL_ANSWER_ACTION
-            or output.tool == FINAL_ANSWER_ACTION_NO_WHITESPACE
-        ):
+        elif output.tool in [FINAL_ANSWER_ACTION, FINAL_ANSWER_ACTION_NO_WHITESPACE]:
             return AgentFinish({"output": output.tool_input}, output.log)
 
         # Sometimes the agent just completely messed up the output format.
@@ -115,33 +106,32 @@ class CodegenAgentExecutor(AgentExecutor):
                 output, verbose=self.verbose, color="green"
             )
 
-        if output.tool == ACTIONS_QUEUE:
-            # TODO: Assign observations to each tool separately. Currently we return observation only from the last tool in the list.
-            observation = ""
-            # Go through each action and run it.
-            # Collect outputs from each action.
-            for action in (
-                cast(ToolLog, action)
-                for action in parse_thoughts_and_actions(output.tool_input)
-                if action["type"] == "tool"
-            ):
-                observation = await self._arun_tool(
-                    tool_name=action["tool_name"],
-                    tool_input=action["tool_input"],
-                    name_to_tool_map=name_to_tool_map,
-                    color_mapping=color_mapping,
-                )
-                # observation = (
-                #     observation
-                #     + f"Output of action '{tool_name}':\n"
-                #     + self._run_tool(
-                #         tool_name=tool_name,
-                #         tool_input=tool_input,
-                #         name_to_tool_map=name_to_tool_map,
-                #         color_mapping=color_mapping,
-                #     )
-                #     + "==="
-                # )
-        else:
+        if output.tool != ACTIONS_QUEUE:
             raise ValueError("Unknown tool:", output.tool)
+        # TODO: Assign observations to each tool separately. Currently we return observation only from the last tool in the list.
+        observation = ""
+        # Go through each action and run it.
+        # Collect outputs from each action.
+        for action in (
+            cast(ToolLog, action)
+            for action in parse_thoughts_and_actions(output.tool_input)
+            if action["type"] == "tool"
+        ):
+            observation = await self._arun_tool(
+                tool_name=action["tool_name"],
+                tool_input=action["tool_input"],
+                name_to_tool_map=name_to_tool_map,
+                color_mapping=color_mapping,
+            )
+            # observation = (
+            #     observation
+            #     + f"Output of action '{tool_name}':\n"
+            #     + self._run_tool(
+            #         tool_name=tool_name,
+            #         tool_input=tool_input,
+            #         name_to_tool_map=name_to_tool_map,
+            #         color_mapping=color_mapping,
+            #     )
+            #     + "==="
+            # )
         return output, observation

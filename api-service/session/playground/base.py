@@ -52,7 +52,7 @@ class Playground(Session):
                 envVars=self.env_vars,
                 rootdir=rootdir,
             ),
-            wait=True if timeout is None else False,
+            wait=timeout is None,
             async_req=True,
         )
 

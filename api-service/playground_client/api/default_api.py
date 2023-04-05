@@ -87,7 +87,7 @@ class DefaultApi(object):
         return self.create_deployment_with_http_info(project_id, session_id, create_deployment_request, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def create_deployment_with_http_info(self, project_id : StrictStr, session_id : Annotated[StrictStr, Field(..., description="active session to use for deployment")], create_deployment_request : CreateDeploymentRequest, **kwargs):  # noqa: E501
+    def create_deployment_with_http_info(self, project_id : StrictStr, session_id : Annotated[StrictStr, Field(..., description="active session to use for deployment")], create_deployment_request : CreateDeploymentRequest, **kwargs):    # noqa: E501
         """create_deployment  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -131,26 +131,20 @@ class DefaultApi(object):
         _all_params = [
             'project_id',
             'session_id',
-            'create_deployment_request'
+            'create_deployment_request',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method create_deployment" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method create_deployment"
                 )
             _params[_key] = _val
         del _params['kwargs']
@@ -174,21 +168,16 @@ class DefaultApi(object):
         _form_params = []
         _files = {}
 
-        # process the body parameter
-        _body_params = None
-        if _params['create_deployment_request']:
-            _body_params = _params['create_deployment_request']
-
+        _body_params = _params['create_deployment_request'] or None
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
 
-        # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
-        if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+        if _content_types_list := _params.get(
+            '_content_type',
+            self.api_client.select_header_content_type(['application/json']),
+        ):
+            _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
         _auth_settings = []  # noqa: E501
@@ -245,7 +234,7 @@ class DefaultApi(object):
         return self.create_sessions_with_http_info(create_sessions_request, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def create_sessions_with_http_info(self, create_sessions_request : CreateSessionsRequest, **kwargs):  # noqa: E501
+    def create_sessions_with_http_info(self, create_sessions_request : CreateSessionsRequest, **kwargs):    # noqa: E501
         """create_sessions  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -283,26 +272,20 @@ class DefaultApi(object):
         _params = locals()
 
         _all_params = [
-            'create_sessions_request'
+            'create_sessions_request',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method create_sessions" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method create_sessions"
                 )
             _params[_key] = _val
         del _params['kwargs']
@@ -322,21 +305,16 @@ class DefaultApi(object):
         _form_params = []
         _files = {}
 
-        # process the body parameter
-        _body_params = None
-        if _params['create_sessions_request']:
-            _body_params = _params['create_sessions_request']
-
+        _body_params = _params['create_sessions_request'] or None
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
 
-        # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
-        if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+        if _content_types_list := _params.get(
+            '_content_type',
+            self.api_client.select_header_content_type(['application/json']),
+        ):
+            _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
         _auth_settings = []  # noqa: E501
@@ -395,7 +373,7 @@ class DefaultApi(object):
         return self.delete_filesystem_entry_with_http_info(session_id, path, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_filesystem_entry_with_http_info(self, session_id : StrictStr, path : StrictStr, **kwargs):  # noqa: E501
+    def delete_filesystem_entry_with_http_info(self, session_id : StrictStr, path : StrictStr, **kwargs):    # noqa: E501
         """delete_filesystem_entry  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -436,31 +414,23 @@ class DefaultApi(object):
 
         _all_params = [
             'session_id',
-            'path'
+            'path',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method delete_filesystem_entry" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method delete_filesystem_entry"
                 )
             _params[_key] = _val
         del _params['kwargs']
-
-        _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
@@ -487,6 +457,7 @@ class DefaultApi(object):
 
         _response_types_map = {}
 
+        _collection_formats = {}
         return self.api_client.call_api(
             '/sessions/{sessionID}/filesystem', 'DELETE',
             _path_params,
@@ -535,7 +506,7 @@ class DefaultApi(object):
         return self.delete_session_with_http_info(session_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def delete_session_with_http_info(self, session_id : StrictStr, **kwargs):  # noqa: E501
+    def delete_session_with_http_info(self, session_id : StrictStr, **kwargs):    # noqa: E501
         """delete_session  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -573,31 +544,23 @@ class DefaultApi(object):
         _params = locals()
 
         _all_params = [
-            'session_id'
+            'session_id',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method delete_session" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method delete_session"
                 )
             _params[_key] = _val
         del _params['kwargs']
-
-        _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
@@ -622,6 +585,7 @@ class DefaultApi(object):
 
         _response_types_map = {}
 
+        _collection_formats = {}
         return self.api_client.call_api(
             '/sessions/{sessionID}', 'DELETE',
             _path_params,
@@ -674,7 +638,7 @@ class DefaultApi(object):
         return self.get_process_with_http_info(session_id, process_id, wait, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_process_with_http_info(self, session_id : StrictStr, process_id : StrictStr, wait : Annotated[Optional[StrictBool], Field(description="if true the request will wait until the process ends and then return the `stdout`, `stderr` and `processID`.")] = None, **kwargs):  # noqa: E501
+    def get_process_with_http_info(self, session_id : StrictStr, process_id : StrictStr, wait : Annotated[Optional[StrictBool], Field(description="if true the request will wait until the process ends and then return the `stdout`, `stderr` and `processID`.")] = None, **kwargs):    # noqa: E501
         """get_process  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -718,31 +682,23 @@ class DefaultApi(object):
         _all_params = [
             'session_id',
             'process_id',
-            'wait'
+            'wait',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_process" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method get_process"
                 )
             _params[_key] = _val
         del _params['kwargs']
-
-        _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
@@ -777,6 +733,7 @@ class DefaultApi(object):
             '200': "ProcessResponse",
         }
 
+        _collection_formats = {}
         return self.api_client.call_api(
             '/sessions/{sessionID}/processes/{processID}', 'GET',
             _path_params,
@@ -825,7 +782,7 @@ class DefaultApi(object):
         return self.get_session_with_http_info(session_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def get_session_with_http_info(self, session_id : StrictStr, **kwargs):  # noqa: E501
+    def get_session_with_http_info(self, session_id : StrictStr, **kwargs):    # noqa: E501
         """get_session  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -863,31 +820,23 @@ class DefaultApi(object):
         _params = locals()
 
         _all_params = [
-            'session_id'
+            'session_id',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_session" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method get_session"
                 )
             _params[_key] = _val
         del _params['kwargs']
-
-        _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
@@ -918,6 +867,7 @@ class DefaultApi(object):
             '200': "SessionResponse",
         }
 
+        _collection_formats = {}
         return self.api_client.call_api(
             '/sessions/{sessionID}', 'GET',
             _path_params,
@@ -968,7 +918,7 @@ class DefaultApi(object):
         return self.list_filesystem_dir_with_http_info(session_id, path, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def list_filesystem_dir_with_http_info(self, session_id : StrictStr, path : StrictStr, **kwargs):  # noqa: E501
+    def list_filesystem_dir_with_http_info(self, session_id : StrictStr, path : StrictStr, **kwargs):    # noqa: E501
         """list_filesystem_dir  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1009,31 +959,23 @@ class DefaultApi(object):
 
         _all_params = [
             'session_id',
-            'path'
+            'path',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method list_filesystem_dir" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method list_filesystem_dir"
                 )
             _params[_key] = _val
         del _params['kwargs']
-
-        _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
@@ -1066,6 +1008,7 @@ class DefaultApi(object):
             '200': "ListFilesystemDirResponse",
         }
 
+        _collection_formats = {}
         return self.api_client.call_api(
             '/sessions/{sessionID}/filesystem/dir', 'GET',
             _path_params,
@@ -1116,7 +1059,7 @@ class DefaultApi(object):
         return self.make_filesystem_dir_with_http_info(session_id, path, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def make_filesystem_dir_with_http_info(self, session_id : StrictStr, path : StrictStr, **kwargs):  # noqa: E501
+    def make_filesystem_dir_with_http_info(self, session_id : StrictStr, path : StrictStr, **kwargs):    # noqa: E501
         """make_filesystem_dir  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1157,31 +1100,23 @@ class DefaultApi(object):
 
         _all_params = [
             'session_id',
-            'path'
+            'path',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method make_filesystem_dir" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method make_filesystem_dir"
                 )
             _params[_key] = _val
         del _params['kwargs']
-
-        _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
@@ -1208,6 +1143,7 @@ class DefaultApi(object):
 
         _response_types_map = {}
 
+        _collection_formats = {}
         return self.api_client.call_api(
             '/sessions/{sessionID}/filesystem/dir', 'PUT',
             _path_params,
@@ -1258,7 +1194,7 @@ class DefaultApi(object):
         return self.read_filesystem_file_with_http_info(session_id, path, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def read_filesystem_file_with_http_info(self, session_id : StrictStr, path : StrictStr, **kwargs):  # noqa: E501
+    def read_filesystem_file_with_http_info(self, session_id : StrictStr, path : StrictStr, **kwargs):    # noqa: E501
         """read_filesystem_file  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1299,31 +1235,23 @@ class DefaultApi(object):
 
         _all_params = [
             'session_id',
-            'path'
+            'path',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method read_filesystem_file" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method read_filesystem_file"
                 )
             _params[_key] = _val
         del _params['kwargs']
-
-        _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
@@ -1356,6 +1284,7 @@ class DefaultApi(object):
             '200': "ReadFilesystemFileResponse",
         }
 
+        _collection_formats = {}
         return self.api_client.call_api(
             '/sessions/{sessionID}/filesystem/file', 'GET',
             _path_params,
@@ -1408,7 +1337,7 @@ class DefaultApi(object):
         return self.start_process_with_http_info(session_id, start_process_params, wait, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def start_process_with_http_info(self, session_id : StrictStr, start_process_params : StartProcessParams, wait : Annotated[Optional[StrictBool], Field(description="if true the request will wait until the process ends and then return the `stdout`, `stderr` and `processID`.")] = None, **kwargs):  # noqa: E501
+    def start_process_with_http_info(self, session_id : StrictStr, start_process_params : StartProcessParams, wait : Annotated[Optional[StrictBool], Field(description="if true the request will wait until the process ends and then return the `stdout`, `stderr` and `processID`.")] = None, **kwargs):    # noqa: E501
         """start_process  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1452,26 +1381,20 @@ class DefaultApi(object):
         _all_params = [
             'session_id',
             'start_process_params',
-            'wait'
+            'wait',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method start_process" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method start_process"
                 )
             _params[_key] = _val
         del _params['kwargs']
@@ -1495,21 +1418,16 @@ class DefaultApi(object):
         _form_params = []
         _files = {}
 
-        # process the body parameter
-        _body_params = None
-        if _params['start_process_params']:
-            _body_params = _params['start_process_params']
-
+        _body_params = _params['start_process_params'] or None
         # set the HTTP header `Accept`
         _header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
 
-        # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
-        if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+        if _content_types_list := _params.get(
+            '_content_type',
+            self.api_client.select_header_content_type(['application/json']),
+        ):
+            _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
         _auth_settings = []  # noqa: E501
@@ -1570,7 +1488,7 @@ class DefaultApi(object):
         return self.stop_process_with_http_info(session_id, process_id, results, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def stop_process_with_http_info(self, session_id : StrictStr, process_id : StrictStr, results : Optional[StrictBool] = None, **kwargs):  # noqa: E501
+    def stop_process_with_http_info(self, session_id : StrictStr, process_id : StrictStr, results : Optional[StrictBool] = None, **kwargs):    # noqa: E501
         """stop_process  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1614,31 +1532,23 @@ class DefaultApi(object):
         _all_params = [
             'session_id',
             'process_id',
-            'results'
+            'results',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method stop_process" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method stop_process"
                 )
             _params[_key] = _val
         del _params['kwargs']
-
-        _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
@@ -1673,6 +1583,7 @@ class DefaultApi(object):
             '200': "ProcessResponse",
         }
 
+        _collection_formats = {}
         return self.api_client.call_api(
             '/sessions/{sessionID}/processes/{processID}', 'DELETE',
             _path_params,
@@ -1721,7 +1632,7 @@ class DefaultApi(object):
         return self.wait_for_log_output_with_http_info(run_id, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def wait_for_log_output_with_http_info(self, run_id : StrictStr, **kwargs):  # noqa: E501
+    def wait_for_log_output_with_http_info(self, run_id : StrictStr, **kwargs):    # noqa: E501
         """wait_for_log_output  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1759,31 +1670,23 @@ class DefaultApi(object):
         _params = locals()
 
         _all_params = [
-            'run_id'
+            'run_id',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method wait_for_log_output" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method wait_for_log_output"
                 )
             _params[_key] = _val
         del _params['kwargs']
-
-        _collection_formats = {}
 
         # process the path parameters
         _path_params = {}
@@ -1814,6 +1717,7 @@ class DefaultApi(object):
             '200': "ToolsLogOutput",
         }
 
+        _collection_formats = {}
         return self.api_client.call_api(
             '/tools/logOutput', 'GET',
             _path_params,
@@ -1866,7 +1770,7 @@ class DefaultApi(object):
         return self.write_filesystem_file_with_http_info(session_id, path, write_filesystem_file_request, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def write_filesystem_file_with_http_info(self, session_id : StrictStr, path : StrictStr, write_filesystem_file_request : WriteFilesystemFileRequest, **kwargs):  # noqa: E501
+    def write_filesystem_file_with_http_info(self, session_id : StrictStr, path : StrictStr, write_filesystem_file_request : WriteFilesystemFileRequest, **kwargs):    # noqa: E501
         """write_filesystem_file  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -1910,26 +1814,20 @@ class DefaultApi(object):
         _all_params = [
             'session_id',
             'path',
-            'write_filesystem_file_request'
+            'write_filesystem_file_request',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method write_filesystem_file" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method write_filesystem_file"
                 )
             _params[_key] = _val
         del _params['kwargs']
@@ -1953,17 +1851,12 @@ class DefaultApi(object):
         _form_params = []
         _files = {}
 
-        # process the body parameter
-        _body_params = None
-        if _params['write_filesystem_file_request']:
-            _body_params = _params['write_filesystem_file_request']
-
-        # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
-        if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+        _body_params = _params['write_filesystem_file_request'] or None
+        if _content_types_list := _params.get(
+            '_content_type',
+            self.api_client.select_header_content_type(['application/json']),
+        ):
+            _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
         _auth_settings = []  # noqa: E501
@@ -2022,7 +1915,7 @@ class DefaultApi(object):
         return self.write_process_stdin_with_http_info(session_id, process_id, write_process_stdin_request, **kwargs)  # noqa: E501
 
     @validate_arguments
-    def write_process_stdin_with_http_info(self, session_id : StrictStr, process_id : StrictStr, write_process_stdin_request : WriteProcessStdinRequest, **kwargs):  # noqa: E501
+    def write_process_stdin_with_http_info(self, session_id : StrictStr, process_id : StrictStr, write_process_stdin_request : WriteProcessStdinRequest, **kwargs):    # noqa: E501
         """write_process_stdin  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
@@ -2066,26 +1959,20 @@ class DefaultApi(object):
         _all_params = [
             'session_id',
             'process_id',
-            'write_process_stdin_request'
+            'write_process_stdin_request',
+            'async_req',
+            '_return_http_data_only',
+            '_preload_content',
+            '_request_timeout',
+            '_request_auth',
+            '_content_type',
+            '_headers',
         ]
-        _all_params.extend(
-            [
-                'async_req',
-                '_return_http_data_only',
-                '_preload_content',
-                '_request_timeout',
-                '_request_auth',
-                '_content_type',
-                '_headers'
-            ]
-        )
-
         # validate the arguments
         for _key, _val in _params['kwargs'].items():
             if _key not in _all_params:
                 raise ApiTypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method write_process_stdin" % _key
+                    f"Got an unexpected keyword argument '{_key}' to method write_process_stdin"
                 )
             _params[_key] = _val
         del _params['kwargs']
@@ -2109,17 +1996,12 @@ class DefaultApi(object):
         _form_params = []
         _files = {}
 
-        # process the body parameter
-        _body_params = None
-        if _params['write_process_stdin_request']:
-            _body_params = _params['write_process_stdin_request']
-
-        # set the HTTP header `Content-Type`
-        _content_types_list = _params.get('_content_type',
-            self.api_client.select_header_content_type(
-                ['application/json']))
-        if _content_types_list:
-                _header_params['Content-Type'] = _content_types_list
+        _body_params = _params['write_process_stdin_request'] or None
+        if _content_types_list := _params.get(
+            '_content_type',
+            self.api_client.select_header_content_type(['application/json']),
+        ):
+            _header_params['Content-Type'] = _content_types_list
 
         # authentication setting
         _auth_settings = []  # noqa: E501

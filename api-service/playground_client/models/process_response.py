@@ -60,16 +60,12 @@ class ProcessResponse(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of each item in stderr (list)
         _items = []
         if self.stderr:
-            for _item in self.stderr:
-                if _item:
-                    _items.append(_item.to_dict())
+            _items.extend(_item.to_dict() for _item in self.stderr if _item)
             _dict['stderr'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in stdout (list)
         _items = []
         if self.stdout:
-            for _item in self.stdout:
-                if _item:
-                    _items.append(_item.to_dict())
+            _items.extend(_item.to_dict() for _item in self.stdout if _item)
             _dict['stdout'] = _items
         return _dict
 
@@ -83,15 +79,28 @@ class ProcessResponse(BaseModel):
             return ProcessResponse.parse_obj(obj)
 
         # raise errors for additional fields in the input
-        for _key in obj.keys():
+        for _key in obj:
             if _key not in cls.__properties:
-                raise ValueError("Error due to additional fields (not defined in ProcessResponse) in the input: " + obj)
+                raise ValueError(
+                    f"Error due to additional fields (not defined in ProcessResponse) in the input: {obj}"
+                )
 
-        _obj = ProcessResponse.parse_obj({
-            "stderr": [OutStderrResponse.from_dict(_item) for _item in obj.get("stderr")] if obj.get("stderr") is not None else None,
-            "stdout": [OutStdoutResponse.from_dict(_item) for _item in obj.get("stdout")] if obj.get("stdout") is not None else None,
-            "process_id": obj.get("processID"),
-            "finished": obj.get("finished")
-        })
-        return _obj
+        return ProcessResponse.parse_obj(
+            {
+                "stderr": [
+                    OutStderrResponse.from_dict(_item)
+                    for _item in obj.get("stderr")
+                ]
+                if obj.get("stderr") is not None
+                else None,
+                "stdout": [
+                    OutStdoutResponse.from_dict(_item)
+                    for _item in obj.get("stdout")
+                ]
+                if obj.get("stdout") is not None
+                else None,
+                "process_id": obj.get("processID"),
+                "finished": obj.get("finished"),
+            }
+        )
 
