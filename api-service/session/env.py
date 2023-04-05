@@ -18,8 +18,4 @@ def format_env_vars(envs: List[EnvVar]) -> dict[str, str]:
     )
 
 def cmd_with_env_vars(cmd: str, envs: dict[str, str]):
-    return reduce(
-        lambda acc, env: f"{env[0]}={env[1]} " + acc,
-        envs.items(),
-        cmd,
-    )
+    return reduce(lambda acc, env: f"{env[0]}={env[1]} {acc}", envs.items(), cmd)

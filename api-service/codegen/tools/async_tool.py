@@ -34,7 +34,7 @@ def async_tool(name: str | None = None) -> Callable:
 
         if not name:
             raise ValueError(
-                f"Tool name is not specified. Either specify it in the decorator parameter or add a tool description with an example to the docstring."
+                "Tool name is not specified. Either specify it in the decorator parameter or add a tool description with an example to the docstring."
             )
 
         if tool_example and name != tool_example["tool_name"]:

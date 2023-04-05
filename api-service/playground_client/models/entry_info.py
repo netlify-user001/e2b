@@ -49,11 +49,7 @@ class EntryInfo(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
-        return _dict
+        return self.dict(by_alias=True, exclude={}, exclude_none=True)
 
     @classmethod
     def from_dict(cls, obj: dict) -> EntryInfo:
@@ -65,13 +61,13 @@ class EntryInfo(BaseModel):
             return EntryInfo.parse_obj(obj)
 
         # raise errors for additional fields in the input
-        for _key in obj.keys():
+        for _key in obj:
             if _key not in cls.__properties:
-                raise ValueError("Error due to additional fields (not defined in EntryInfo) in the input: " + obj)
+                raise ValueError(
+                    f"Error due to additional fields (not defined in EntryInfo) in the input: {obj}"
+                )
 
-        _obj = EntryInfo.parse_obj({
-            "is_dir": obj.get("isDir"),
-            "name": obj.get("name")
-        })
-        return _obj
+        return EntryInfo.parse_obj(
+            {"is_dir": obj.get("isDir"), "name": obj.get("name")}
+        )
 

@@ -62,8 +62,7 @@ def parse_thoughts_and_actions(text: str):
         yield ThoughtLog(type="thought", content=leading_thought)
 
     for action in root.findall("action"):
-        tool_name = action.attrib.get("tool", "")
-        if tool_name:
+        if tool_name := action.attrib.get("tool", ""):
             yield ToolLog(type="tool", tool_name=tool_name, tool_input=action.text or "")
 
         # Create thoughts from text between and after actions.

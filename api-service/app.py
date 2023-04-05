@@ -31,10 +31,7 @@ def get_request_body_template(blocks: List[dict[str, str]]):
     request_body_blocks = [
         block for block in blocks if block.get("type") == "RequestBody"
     ]
-    request_body_template = (
-        request_body_blocks[0]["content"] if len(request_body_blocks) > 0 else None
-    )
-    return request_body_template
+    return request_body_blocks[0]["content"] if request_body_blocks else None
 
 
 @app.route("/health", methods=["GET"])

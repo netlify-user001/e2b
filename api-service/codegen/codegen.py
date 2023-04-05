@@ -175,14 +175,7 @@ class Codegen(BaseModel):
         for instruction in get_human_instructions_prefix(
             has_request_body=bool(incoming_request_block)
         ):
-            # inst_idx += 1
-
-            values = []
-            # Extract the correct values from `input_vars` based on the keys.
-            for k, v in input_vars.items():
-                if k in instruction["variables"]:
-                    values.append(v)
-
+            values = [v for k, v in input_vars.items() if k in instruction["variables"]]
             # Use the values to format the instruction string.
             inst = instruction["content"].format(*values)
             # instructions = instructions + "\n" + f"{inst_idx}. {inst}"
@@ -209,7 +202,7 @@ class Codegen(BaseModel):
 
         # Append the premade suffix instructions.
         for inst in HUMAN_INSTRUCTIONS_SUFFIX:
-            instructions = instructions + f"\n{inst}"
+            instructions = f"{instructions}\n{inst}"
 
         # # instructions += "\nThought: Here is the plan of how I will go about solving this based on the instructions I got:\n1."
         # # instructions += "\nThought:"

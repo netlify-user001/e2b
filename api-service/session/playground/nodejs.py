@@ -24,20 +24,16 @@ class NodeJSPlayground(Playground):
     #     # pprint.pprint(f"Result: {result}")
     #     return result
     async def run_saved_javascript_code(self):
-        result = await self.run_command(
+        return await self.run_command(
             f"node {self.default_javascript_code_file}",
             rootdir=self.rootdir,
             timeout=self.run_code_timeout,
         )
-        return result
 
     async def install_dependencies(self, dependencies: str):
-        # print(f"Installing dependencies: {dependencies}")
-        result = await self.run_command(
+        return await self.run_command(
             f"npm install {dependencies}", rootdir=self.rootdir
         )
-        # pprint.pprint(f"Result: {result}")
-        return result
 
     async def run_javascript_server_code_with_request(
         self,
@@ -47,14 +43,12 @@ class NodeJSPlayground(Playground):
     ):
         # print(f"Running '{request_cmd}' for code:\n{code}")
         await self.write_file(self.default_javascript_code_file, code)
-        result = await self.run_server_with_request(
+        return await self.run_server_with_request(
             server_cmd=f"node {self.default_javascript_code_file}",
             request_cmd=request_cmd,
             port=port,
             rootdir=self.rootdir,
         )
-        # pprint.pprint(f"Result: {result}")
-        return result
 
     async def write_javascript_code(self, code: str):
         await self.write_file(self.default_javascript_code_file, code)

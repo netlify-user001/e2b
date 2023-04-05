@@ -50,11 +50,7 @@ class StartProcessParams(BaseModel):
 
     def to_dict(self):
         """Returns the dictionary representation of the model using alias"""
-        _dict = self.dict(by_alias=True,
-                          exclude={
-                          },
-                          exclude_none=True)
-        return _dict
+        return self.dict(by_alias=True, exclude={}, exclude_none=True)
 
     @classmethod
     def from_dict(cls, obj: dict) -> StartProcessParams:
@@ -66,14 +62,17 @@ class StartProcessParams(BaseModel):
             return StartProcessParams.parse_obj(obj)
 
         # raise errors for additional fields in the input
-        for _key in obj.keys():
+        for _key in obj:
             if _key not in cls.__properties:
-                raise ValueError("Error due to additional fields (not defined in StartProcessParams) in the input: " + obj)
+                raise ValueError(
+                    f"Error due to additional fields (not defined in StartProcessParams) in the input: {obj}"
+                )
 
-        _obj = StartProcessParams.parse_obj({
-            "cmd": obj.get("cmd"),
-            "env_vars": obj.get("envVars"),
-            "rootdir": obj.get("rootdir")
-        })
-        return _obj
+        return StartProcessParams.parse_obj(
+            {
+                "cmd": obj.get("cmd"),
+                "env_vars": obj.get("envVars"),
+                "rootdir": obj.get("rootdir"),
+            }
+        )
 

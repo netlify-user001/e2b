@@ -33,7 +33,7 @@ class Database:
         ).execute()
 
     async def push_logs(self, run_id: str, logs: list[ToolLog | ThoughtLog]) -> None:
-        if len(logs) > 0:
+        if logs:
             await self.client.table(tableDeployments).update(
                 {
                     "logs": logs,
@@ -92,6 +92,4 @@ class Database:
             .execute()
         )
         state = result.data[0]["data"]["state"]
-        if "envs" in state:
-            return state["envs"]
-        return []
+        return state["envs"] if "envs" in state else []
